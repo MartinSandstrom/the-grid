@@ -42,7 +42,10 @@ class TheGrid extends React.Component {
         }
     }
 
-    componentDidMount = () => axios(API_CONFIG).then(this.onDataFetched).catch(this.onError);
+    componentDidMount = () =>  {
+        axios(API_CONFIG).then(this.onDataFetched).catch(this.onError);
+        window.addEventListener("scroll", this.onScroll);
+    }
 
     onError = (error) => console.log(error);
 
@@ -50,14 +53,19 @@ class TheGrid extends React.Component {
 
     renderCompanies = () => this.state.companies.map((company, index) => <CompanyCard desc={company.info.data.description} name={company.name} key={index}></CompanyCard>);
 
+    onScroll = () => {
+        if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
+            console.log('I am on the bottom bro');
+        }
+    }
+
     render() {
         return (
             <div className="container">
                 <h1>Tha grid</h1>
-                    <div className="card-deck">
-                        {this.renderCompanies()}
-                    </div>
-
+                <div className="card-deck" onScroll={this.onScroll}>
+                    {this.renderCompanies()}
+                </div>
             </div>
         );
     }
