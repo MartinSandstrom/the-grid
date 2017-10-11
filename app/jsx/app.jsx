@@ -54,7 +54,7 @@ class TheGrid extends React.Component {
 
     renderCompanies = () => {
         let companies = this.state.companies.slice(1, this.state.itemBatches * 15).map((company, index) => {
-            return (<CompanyCard desc={company.info.data.description} name={company.name} key={index}></CompanyCard>);
+            return (<CompanyCard data={company.score.data} desc={company.info.data.description} name={company.name} key={index}></CompanyCard>);
         });
         return companies;
     }
@@ -71,7 +71,7 @@ class TheGrid extends React.Component {
 
     render() {
         return (
-            <div className="container">
+            <div className="">
                 <h1>Tha grid</h1>
                 <div className="card-deck" onScroll={this.onScroll}>
                     {this.renderCompanies()}
