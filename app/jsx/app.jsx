@@ -38,7 +38,8 @@ class TheGrid extends React.Component {
     constructor() {
         super()
         this.state = {
-            companies: []
+            companies: [],
+            itemBatches: 1
         }
     }
 
@@ -51,11 +52,19 @@ class TheGrid extends React.Component {
 
     onDataFetched = (response) => this.setState({companies: response.data.data});
 
-    renderCompanies = () => this.state.companies.map((company, index) => <CompanyCard desc={company.info.data.description} name={company.name} key={index}></CompanyCard>);
+    renderCompanies = () => {
+        let companies = this.state.companies.slice(1, this.state.itemBatches * 15).map((company, index) => {
+            return (<CompanyCard desc={company.info.data.description} name={company.name} key={index}></CompanyCard>);
+        });
+        return companies;
+    }
+
 
     onScroll = () => {
         if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
-            console.log('I am on the bottom bro');
+            let itemBatches = this.state.itemBatches;
+            itemBatches++;
+            this.setState({itemBatches});
         }
     }
 
