@@ -62,6 +62,7 @@ class TheGrid extends React.Component {
 
     onScroll = () => {
         if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
+            //If pagination, this is where we fetch more items.
             let itemBatches = this.state.itemBatches;
             itemBatches++;
             this.setState({itemBatches});
