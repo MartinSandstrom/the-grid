@@ -1,5 +1,5 @@
 import React from 'react';
-import {ResponsiveContainer, Radar, RadarChart, PolarGrid, Legend, PolarAngleAxis, PolarRadiusAxis} from 'recharts';
+import {ResponsiveContainer, Radar, RadarChart, PolarGrid, Legend, PolarAngleAxis} from 'recharts';
 
 export default class CompanyCard extends React.Component {
 
@@ -32,7 +32,6 @@ export default class CompanyCard extends React.Component {
                         <RadarChart data={this.state.dataObject}>
                           <PolarGrid />
                           <PolarAngleAxis dataKey="name" />
-                          <PolarRadiusAxis/>
                           <Radar name={this.props.name} dataKey="value" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6}/>
                         </RadarChart>
                     </ResponsiveContainer>
