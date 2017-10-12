@@ -21,12 +21,10 @@ class TheGrid extends React.Component {
             companies: [],
             offset: 0
         }
-    }
-
-    componentDidMount = () =>  {
-        this.getMoreCompanies();
         window.addEventListener("scroll", this.onScroll);
     }
+
+    componentDidMount = () =>  this.getMoreCompanies();
 
     getMoreCompanies = () => {
         API_CONFIG.data = {
@@ -57,9 +55,8 @@ class TheGrid extends React.Component {
     onError = (error) => console.log(error);
 
     onDataFetched = (response) => {
-        let companies = this.state.companies;
+        let companies = this.state.companies.concat(response.data.data);
         let offset = this.state.offset + NUMBER_OF_COMPANIES;
-        companies = companies.concat(response.data.data);
         this.setState({companies, offset})
     }
 
