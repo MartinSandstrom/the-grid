@@ -2,4 +2,23 @@
     margin-right: 0px;
     margin-right: 0px;
     margin-bottom: 30px;
+
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
+}
+
+.card-body {
+    padding: 13px;
+}
+
+.card-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #CCC;
+    text-align: center;
+}
+
+.container {
+    padding: 0 !important;
 }

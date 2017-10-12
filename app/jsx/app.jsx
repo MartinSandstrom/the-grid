@@ -76,7 +76,7 @@ class TheGrid extends React.Component {
 
     render() {
         return (
-            <div className="">
+            <div className="container">
                 <h1>Tha grid</h1>
                 <div className="card-deck" onScroll={this.onScroll}>
                     {this.renderCompanies()}

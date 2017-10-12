@@ -24,10 +24,10 @@ export default class CompanyCard extends React.Component {
     render() {
 
         return (
-            <div className="col-sm-6 col-lg-4 d-flex align-items-stretch text-center mx-auto">
+            <div className="col-sm-6 col-lg-4 d-flex align-items-stretch mx-auto">
                 <div className="card">
                   <div className="card-body">
-                    <h4 className="card-title">{this.props.name}</h4>
+                    <h6 className="card-title">{this.props.name}</h6>
                     <ResponsiveContainer height={200} widht={200}>
                         <RadarChart data={this.state.dataObject}>
                           <PolarGrid />
