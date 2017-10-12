@@ -17,6 +17,7 @@ export default class CompanyCard extends React.Component {
         let data = this.props.data;
         let dataObject = [];
         let total = data.total;
+        // The charts wants an array of properties sadPanda
         Object.entries(data).forEach((entry) => {
             if (entry[0] != 'total' && entry[0] != 'misc' &&  entry[0] != 'management' &&  entry[0] != 'sentence') {
                 dataObject.push({
@@ -32,7 +33,7 @@ export default class CompanyCard extends React.Component {
     render() {
 
         return (
-            <div className="col-sm-6 d-flex align-items-stretch text-center mx-auto">
+            <div className="col-sm-6 col-lg-4 d-flex align-items-stretch text-center mx-auto">
                 <div className="card">
                   <div className="card-body">
                     <h4 className="card-title">{this.props.name}</h4>

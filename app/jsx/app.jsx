@@ -9,51 +9,62 @@ const API_CONFIG = {
     headers: {
         'Accept': 'application/vnd.simplywallst.v2',
         'Content-Type': 'application/json'
-    },
-    data: {
-        'offset': 0,
-        'size': 100,
-        'rules': [
-            [
-                'is_fund', '=', 'false'
-            ],
-            [
-                'primary_flag', '=', 'true'
-            ],
-            [
-                'analyst_count', '>', '0'
-            ],
-            [
-                'country_name', '=', 'AU'
-            ],
-            [
-                'value_score', '>', 1
-            ],
-            ['order_by', 'market_cap', 'desc']
-        ]
     }
 };
+
+const NUMBER_OF_COMPANIES = 30;
 
 class TheGrid extends React.Component {
     constructor() {
         super()
         this.state = {
             companies: [],
-            itemBatches: 1
+            offset: 0
         }
     }
 
     componentDidMount = () =>  {
-        axios(API_CONFIG).then(this.onDataFetched).catch(this.onError);
+        this.getMoreCompanies();
         window.addEventListener("scroll", this.onScroll);
+    }
+
+    getMoreCompanies = () => {
+        API_CONFIG.data = {
+            'offset': NUMBER_OF_COMPANIES + this.state.offset,
+            'size': NUMBER_OF_COMPANIES,
+            'rules': [
+                [
+                    'is_fund', '=', 'false'
+                ],
+                [
+                    'primary_flag', '=', 'true'
+                ],
+                [
+                    'analyst_count', '>', '0'
+                ],
+                [
+                    'country_name', '=', 'AU'
+                ],
+                [
+                    'value_score', '>', 1
+                ],
+                ['order_by', 'market_cap', 'desc']
+            ]
+        };
+        axios(API_CONFIG).then(this.onDataFetched).catch(this.onError);
     }
 
     onError = (error) => console.log(error);
 
-    onDataFetched = (response) => this.setState({companies: response.data.data});
+    onDataFetched = (response) => {
+        let companies = this.state.companies;
+        let offset = this.state.offset + NUMBER_OF_COMPANIES;
+        companies = companies.concat(response.data.data);
+        this.setState({companies})
+    }
 
     renderCompanies = () => {
-        let companies = this.state.companies.slice(1, this.state.itemBatches * 15).map((company, index) => {
+        let companies = this.state.companies.map((company, index) => {
             return (<CompanyCard data={company.score.data} desc={company.info.data.description} name={company.name} key={index}></CompanyCard>);
         });
         return companies;
@@ -62,10 +73,7 @@ class TheGrid extends React.Component {
 
     onScroll = () => {
         if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
-            //If pagination, this is where we fetch more items.
-            let itemBatches = this.state.itemBatches;
-            itemBatches++;
-            this.setState({itemBatches});
+            this.getMoreCompanies();
         }
     }
 
