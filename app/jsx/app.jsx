@@ -30,7 +30,7 @@ class TheGrid extends React.Component {
 
     getMoreCompanies = () => {
         API_CONFIG.data = {
-            'offset': NUMBER_OF_COMPANIES + this.state.offset,
+            'offset': this.state.offset,
             'size': NUMBER_OF_COMPANIES,
             'rules': [
                 [
@@ -60,7 +60,7 @@ class TheGrid extends React.Component {
         let companies = this.state.companies;
         let offset = this.state.offset + NUMBER_OF_COMPANIES;
         companies = companies.concat(response.data.data);
-        this.setState({companies})
+        this.setState({companies, offset})
     }
 
     renderCompanies = () => {
