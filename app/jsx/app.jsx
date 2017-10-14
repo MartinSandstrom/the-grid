@@ -12,7 +12,7 @@ const API_CONFIG = {
     }
 };
 
-const NUMBER_OF_COMPANIES = 100;
+const NUMBER_OF_COMPANIES = 30;
 
 class TheGrid extends React.Component {
     constructor() {
@@ -34,6 +34,7 @@ class TheGrid extends React.Component {
     }
 
     getMoreCompanies = () => {
+        this.setState({isLoadingMoreCompanies: true})
         API_CONFIG.data = {
             'offset': this.state.offset,
             'size': NUMBER_OF_COMPANIES,
@@ -59,9 +60,13 @@ class TheGrid extends React.Component {
         axios(API_CONFIG).then(this.onDataFetched).catch(this.onError);
     }
 
-    onError = (error) => console.log(error);
+    onError = (error) => {
+        console.log(error);
+        this.setState({isLoadingMoreCompanies: false});
+    }
 
     onDataFetched = (response) => {
+        this.setState({isLoadingMoreCompanies: false});
         if (response.data.data.length === 0) {
             this.setState({noMoreResults: true});
         } else {
@@ -88,11 +93,20 @@ class TheGrid extends React.Component {
         }
     }
 
+    renderLoader = () => {
+        if (this.state.isLoadingMoreCompanies) {
+            return <img src="./img/fruits-apple.gif" className="img-responsive"></img>
+        }
+    }
+
     render() {
         return (
             <div className="container">
                 <div className="card-deck" onScroll={this.onScroll}>
                     {this.renderCompanies()}
+                </div>
+                <div className="mx-auto text-center">
+                    {this.renderLoader()}
                 </div>
                 {this.renderNoMoreItems()}
             </div>
