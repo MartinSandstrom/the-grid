@@ -1,7 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import axios from 'axios';
-import CompanyCard from './CompanyCard.jsx';
+import View from './View.jsx';
 
 const API_CONFIG = {
     url: 'https://simplywall.st/api/grid/filter?include=info%2Cscore',
@@ -79,7 +79,7 @@ class TheGrid extends React.Component {
     renderCompanies = () => {
         let companies = this.state.companies.map((company, index) => {
             return (
-                <CompanyCard data={company.score.data} desc={company.info.data.description} name={company.name} key={index}></CompanyCard>
+                <View data={company.score.data} desc={company.info.data.description} name={company.name} key={index}></View>
             );
         });
         return companies;
