@@ -12,19 +12,26 @@ const API_CONFIG = {
     }
 };
 
-const NUMBER_OF_COMPANIES = 30;
+const NUMBER_OF_COMPANIES = 100;
 
 class TheGrid extends React.Component {
     constructor() {
         super()
         this.state = {
             companies: [],
-            offset: 0
+            offset: 0,
+            noMoreResults: false
         }
         window.addEventListener("scroll", this.onScroll);
     }
 
-    componentDidMount = () =>  this.getMoreCompanies();
+    componentDidMount = () => this.getMoreCompanies();
+
+    onScroll = () => {
+        if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
+            this.getMoreCompanies();
+        }
+    }
 
     getMoreCompanies = () => {
         API_CONFIG.data = {
@@ -55,32 +62,39 @@ class TheGrid extends React.Component {
     onError = (error) => console.log(error);
 
     onDataFetched = (response) => {
-        let companies = this.state.companies.concat(response.data.data);
-        let offset = this.state.offset + NUMBER_OF_COMPANIES;
-        this.setState({companies, offset})
+        if (response.data.data.length === 0) {
+            this.setState({noMoreResults: true});
+        } else {
+            let companies = this.state.companies.concat(response.data.data);
+            let offset = this.state.offset + NUMBER_OF_COMPANIES;
+            this.setState({companies, offset});
+        }
     }
 
     renderCompanies = () => {
         let companies = this.state.companies.map((company, index) => {
-            return (<CompanyCard data={company.score.data} desc={company.info.data.description} name={company.name} key={index}></CompanyCard>);
+            return (
+                <CompanyCard data={company.score.data} desc={company.info.data.description} name={company.name} key={index}></CompanyCard>
+            );
         });
         return companies;
     }
 
-
-    onScroll = () => {
-        if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
-            this.getMoreCompanies();
+    renderNoMoreItems = () => {
+        if (this.state.noMoreResults) {
+            return (
+                <h5 className="text-center">No more items</h5>
+            );
         }
     }
 
     render() {
         return (
             <div className="container">
-                <h1>Tha grid</h1>
                 <div className="card-deck" onScroll={this.onScroll}>
                     {this.renderCompanies()}
                 </div>
+                {this.renderNoMoreItems()}
             </div>
         );
     }

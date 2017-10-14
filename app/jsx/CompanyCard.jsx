@@ -32,7 +32,7 @@ export default class CompanyCard extends React.Component {
                         <RadarChart data={this.state.dataObject}>
                           <PolarGrid />
                           <PolarAngleAxis dataKey="name" />
-                          <Radar name={this.props.name} dataKey="value" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6}/>
+                          <Radar name={this.props.name} dataKey="value" stroke="#22D900" fill="#39FF14" fillOpacity={0.6}/>
                         </RadarChart>
                     </ResponsiveContainer>
                     <p className="card-text">{this.props.desc}</p>
