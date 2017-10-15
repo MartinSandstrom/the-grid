@@ -5,22 +5,22 @@
 ### Install
 
 ```console
-    npm install
+    $ npm install
 ```
 
 ### Run dev server
 
 ```console
-    npm start
+    $ npm start
 ```
 ### Start webpack and bundle javascript
 
 ```console
-    npm run dev
+    $ npm run dev
 ```
 
 ### Deploy to https://martinsandstrom.github.io/the-grid
 
 ```console
-    npm run deploy
+    $ npm run deploy
 ```
