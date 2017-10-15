@@ -96,7 +96,7 @@ class TheGrid extends React.Component {
     }
 
     renderLoader = () => {
-        if (this.state.isLoadingMoreCompanies) {
+        if (this.state.isLoadingMoreCompanies && !this.state.noMoreResults) {
             return <img src="./img/fruits-apple.gif" className="img-responsive"></img>
         }
     }
