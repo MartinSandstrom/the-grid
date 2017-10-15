@@ -1,20 +1,11 @@
-.navbar {
-    margin-bottom: 30px;
-}
-
-.navbar-brand {
-    margin-right: 0;
+.card-body {
+    padding: 13px;
 }
 
 .card-deck .card {
     margin-right: 0px;
-    margin-right: 0px;
     margin-bottom: 30px;
-    box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
-}
-
-.card-body {
-    padding: 13px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
 }
 
 .card-title {
@@ -23,10 +14,17 @@
     white-space: nowrap;
     padding-bottom: 15px;
     border-bottom: 1px solid #CCC;
-    text-align: center;
     padding-top: 4px;
 }
 
 .container {
     padding: 0 !important;
+}
+
+.navbar {
+    margin-bottom: 30px;
+}
+
+.navbar-brand {
+    margin-right: 0;
 }

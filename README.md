@@ -18,3 +18,9 @@
 ```console
     npm run dev
 ```
+
+### Deploy to https://martinsandstrom.github.io/the-grid
+
+```console
+    npm run deploy
+```

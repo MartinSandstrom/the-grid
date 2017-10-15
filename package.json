@@ -4,10 +4,10 @@
     "description": "",
     "main": "app.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node app.js",
         "dev": "webpack -d && webpack -d --watch",
-        "build": "webpack -p"
+        "deploy": "webpack -p && gulp deploy",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node app.js"
     },
     "repository": {
         "type": "git",
@@ -20,7 +20,9 @@
     },
     "homepage": "https://github.com/MartinSandstrom/the-grid#readme",
     "devDependencies": {
-        "express": "^4.16.2"
+        "express": "^4.16.2",
+        "gulp": "^3.9.1",
+        "gulp-gh-pages": "^0.5.4"
     },
     "dependencies": {
         "axios": "^0.16.2",

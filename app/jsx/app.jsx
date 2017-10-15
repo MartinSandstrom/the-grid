@@ -1,7 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import axios from 'axios';
-import View from './View.jsx';
+import CompanyCard from './CompanyCard.jsx';
 
 const API_CONFIG = {
     url: 'https://simplywall.st/api/grid/filter?include=info%2Cscore',
@@ -11,6 +11,25 @@ const API_CONFIG = {
         'Content-Type': 'application/json'
     }
 };
+
+const RULES = [
+    [
+        'is_fund', '=', 'false'
+    ],
+    [
+        'primary_flag', '=', 'true'
+    ],
+    [
+        'analyst_count', '>', '0'
+    ],
+    [
+        'country_name', '=', 'AU'
+    ],
+    [
+        'value_score', '>', 1
+    ],
+    ['order_by', 'market_cap', 'desc']
+];
 
 const NUMBER_OF_COMPANIES = 30;
 
@@ -25,43 +44,26 @@ class TheGrid extends React.Component {
         window.addEventListener("scroll", this.onScroll);
     }
 
-    componentDidMount = () => this.getMoreCompanies();
+    componentDidMount = () => this.getCompanies();
 
     onScroll = () => {
         if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
-            this.getMoreCompanies();
+            this.getCompanies();
         }
     }
 
-    getMoreCompanies = () => {
+    getCompanies = () => {
         this.setState({isLoadingMoreCompanies: true})
         API_CONFIG.data = {
             'offset': this.state.offset,
             'size': NUMBER_OF_COMPANIES,
-            'rules': [
-                [
-                    'is_fund', '=', 'false'
-                ],
-                [
-                    'primary_flag', '=', 'true'
-                ],
-                [
-                    'analyst_count', '>', '0'
-                ],
-                [
-                    'country_name', '=', 'AU'
-                ],
-                [
-                    'value_score', '>', 1
-                ],
-                ['order_by', 'market_cap', 'desc']
-            ]
+            'rules': RULES
         };
         axios(API_CONFIG).then(this.onDataFetched).catch(this.onError);
     }
 
     onError = (error) => {
-        console.log(error);
+        console.error(error);
         this.setState({isLoadingMoreCompanies: false});
     }
 
@@ -79,7 +81,7 @@ class TheGrid extends React.Component {
     renderCompanies = () => {
         let companies = this.state.companies.map((company, index) => {
             return (
-                <View data={company.score.data} desc={company.info.data.description} name={company.name} key={index}></View>
+                <CompanyCard data={company.score.data} desc={company.info.data.description} name={company.name} key={index}></CompanyCard>
             );
         });
         return companies;
